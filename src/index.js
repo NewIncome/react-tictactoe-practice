@@ -8,15 +8,19 @@ class Square extends React.Component {
     super(props);
 
     this.state = {
-      value = null,
+      value: null,
     };
   }
 
   render() {
     return (
-      <button className="square" onClick={() =>
-        alert('click') }>
-        {this.props.value}
+      <button
+        className="square"
+        onClick={() => this.setState({ value: 'X' }) }
+        /* the setState in an onClick eventHandler tells React to
+        re-render that square when clicked */ 
+      >
+          {this.state.value}
       </button>
     );
   }
@@ -24,7 +28,8 @@ class Square extends React.Component {
 
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square value={i} />;   // You define it when you call it
+    return <Square value={i} />;
+    // You define the Prop when you call/set it
   }
 
   render() {
