@@ -4,23 +4,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: null,
-    };
-  }
-
   render() {
     return (
       <button
         className="square"
-        onClick={() => this.setState({ value: 'X' }) }
-        /* the setState in an onClick eventHandler tells React to
-        re-render that square when clicked */ 
+        onClick={() => this.props.onClick() }
       >
-          {this.state.value}
+          {this.props.value}
       </button>
     );
   }
