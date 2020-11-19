@@ -4,18 +4,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 // Is now a Controlled Component
-class Square extends React.Component {
-  render() {
-    return (
-      <button
-        className="square"
-        onClick={() => this.props.onClick() }
-      >
-          {this.props.value}
-      </button>
-    );
-  }
+function Square(props) {
+  return (
+    // this is func component syntax
+    <button className="square" onClick={props.onClick}>
+        {props.value}
+    </button>
+  );
 }
+// onClick={() => this.props.onClick() }  is React/Class component syntax
 
 /* The best approach is to store the game’s state in the parent
 Board component instead of in each Square. Then the Board component can
