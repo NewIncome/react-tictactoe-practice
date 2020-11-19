@@ -6,13 +6,11 @@ import './index.css';
 // Is now a Controlled Component
 function Square(props) {
   return (
-    // this is func component syntax
     <button className="square" onClick={props.onClick}>
         {props.value}
     </button>
   );
 }
-// onClick={() => this.props.onClick() }  is React/Class component syntax
 
 /* The best approach is to store the game’s state in the parent
 Board component instead of in each Square. Then the Board component can
@@ -24,13 +22,17 @@ class Board extends React.Component {
 
     this.state = {
       squares: Array(9).fill(null),
+      xIsNext: true,
     };
   }
 
   handleClick(i) {
-    const squares = this.state.squares.slice(); // gets the state and put a copy in a variable. For inmutability
-    squares[i] = 'X'; // modifies the new state array
-    this.setState({ squares: squares }); // pushes the new state array to (be) the actual state
+    const squares = this.state.squares.slice();
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext,
+    });
     // the setState re-renders the component and it's children
   }
 
