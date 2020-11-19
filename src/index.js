@@ -17,18 +17,6 @@ Board component instead of in each Square. Then the Board component can
 tell each Square what to display by passing a prop. */
 
 class Board extends React.Component {
-  handleClick(i) {
-    const squares = this.state.squares.slice();
-    if (calculateWinner(squares) || squares[i]) return;
-
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      squares: squares,
-      xIsNext: !this.state.xIsNext,
-    });
-    // the setState re-renders the component and it's children
-  }
-
   renderSquare(i) {
     return (
       <Square
@@ -72,6 +60,24 @@ class Game extends React.Component {
       }],
       xIsNext: true,
     };
+  }
+
+  handleClick(i) {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+
+    if (calculateWinner(squares) || squares[i]) return;
+
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      history: history.concat([{
+        // concat() method doesn't mutate the array, unlike push()
+        squares: squares,
+      }]),
+      xIsNext: !this.state.xIsNext,
+    });
+    // the setState re-renders the component and it's children
   }
 
   render() {
