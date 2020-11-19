@@ -58,12 +58,13 @@ class Game extends React.Component {
       history: [{
         squares: Array(9).fill(null),
       }],
+      stepNumber: 0,
       xIsNext: true,
     };
   }
 
   handleClick(i) {
-    const history = this.state.history;
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
 
@@ -75,9 +76,17 @@ class Game extends React.Component {
         // concat() method doesn't mutate the array, unlike push()
         squares: squares,
       }]),
+      stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
     // the setState re-renders the component and it's children
+  }
+
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: (step % 2) === 0,
+    });
   }
 
   render() {
@@ -90,7 +99,8 @@ class Game extends React.Component {
         'Go to move #' + move :
         'Go to game start';
       return (
-        <li>
+        /* The moves are never re-ordered, deleted, or inserted in the middle, so it’s safe to use the move index as a key */
+        <li key={move}>
           <button onClick={() => this.jumpTo(move)}>
             {desc}
           </button>
