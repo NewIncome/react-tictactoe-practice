@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+// Is now a Controlled Component
 class Square extends React.Component {
   render() {
     return (
@@ -27,6 +28,13 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null),
     };
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice(); // gets the state and put a copy in a variable. For inmutability
+    squares[i] = 'X'; // modifies the new state array
+    this.setState({ squares: squares }); // pushes the new state array to (be) the actual state
+    // the setState re-renders the component and it's children
   }
 
   renderSquare(i) {
